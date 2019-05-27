@@ -210,17 +210,24 @@ function updatedb()
     <!-- End footer Area -->
 
     <script>
-        var pro = document.querySelectorAll('.q');
-        var pri = document.querySelectorAll('.p');
-        var tot = document.querySelectorAll('.t');
-        var sum = 0;
-        for( i=0;i<pro.length;i++)
+        document.querySelectorAll('.q').onchange = updateCart
+        updateCart()
+        function updateCart()
         {
-            console.log(pro[i].value);
-            tot[i].innerHTML = parseInt(pro[i].value) * parseInt(pri[i].innerHTML); 
-            sum = sum + parseInt(tot[i].innerHTML);
+            var pro = document.querySelectorAll('.q');
+            var pri = document.querySelectorAll('.p');
+            var tot = document.querySelectorAll('.t');
+            var sum = 0;
+            for( i=0;i<pro.length;i++)
+            {
+                console.log(pro[i].value);
+                tot[i].innerHTML = parseInt(pro[i].value) * parseInt(pri[i].innerHTML); 
+                sum = sum + parseInt(tot[i].innerHTML);
+            }
+            document.getElementById('ot').innerHTML = "₹ "+sum;
+
         }
-        document.getElementById('ot').innerHTML = "₹ "+sum;
+        
     </script>
 
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
