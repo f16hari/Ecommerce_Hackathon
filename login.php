@@ -16,7 +16,7 @@
         if($count == 1) {
   
            $_SESSION['login_user'] = $myusername;
-              
+           header("Location:index.php");   
            
     
         }else {

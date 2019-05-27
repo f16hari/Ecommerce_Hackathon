@@ -216,7 +216,6 @@ function updatedb()
             var ele = document.getElementById(id)
             if(parseInt(ele.value)<parseInt(max))
             ele.value = (parseInt(ele.value)+1);
-            console.log(ele.value)
             updateCart()
         }
         function decrease(pid)
@@ -226,7 +225,6 @@ function updatedb()
             ele.value = parseInt(ele.value)-1;
             if(parseInt(ele.value)<0)
                 ele.value = 0;
-            console.log(ele.value)
             updateCart()
         }
         function updateCart()
@@ -237,11 +235,13 @@ function updatedb()
             var sum = 0;
             for( i=0;i<pro.length;i++)
             {
-                console.log(pro[i].value);
                 tot[i].innerHTML = parseInt(pro[i].value) * parseInt(pri[i].innerHTML); 
                 sum = sum + parseInt(tot[i].innerHTML);
             }
             document.getElementById('ot').innerHTML = "₹ "+sum;
+            <?php if(isset($_SESSION['login_user'])){?>
+                console.log("update database required");
+            <?php }?>
 
         }
         
