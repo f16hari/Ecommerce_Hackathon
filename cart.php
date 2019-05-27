@@ -1,3 +1,50 @@
+<?php include("config.php");?>
+<?php
+if(isset($_SESSION['login_user']))
+{
+    $name = $_SESSION['login_user'];
+    $q = "SELECT cart_details from user where uname=$name";
+    $result = $db->query($q);
+    
+}
+
+if($_SERVER["REQUEST_METHOD"] == "GET") {
+	// username and password sent from form 
+	
+    $id = isset($_GET['id']) ? $_GET['id'] : "";
+    
+    if(!isset($_SESSION['cart']))
+    {
+        $_SESSION['cart'] = array();
+    }
+
+    if(array_key_exists($id,$_SESSION['cart']))
+    {
+        
+
+    }
+    elseif($id!='')
+    {
+        $_SESSION['cart'][$id] = 1;
+        
+    }
+    
+}
+function updatedb()
+{
+    if(isset($_SESSION['login_user']))
+    {
+        global $db;
+        $var = serialize($_SESSION['cart']);
+        $name = $_SESSION['login_user'];
+        $q = "UPDATE user SET cart_details='$var' WHERE uname='$name';";
+        $result = $db->query($q);
+        
+
+    }
+    
+}
+?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -67,24 +114,32 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <?php foreach($_SESSION['cart'] as $key=>$value){
+                            
+                            $q = "select * from product_db where product_id=$key";
+                            $r = $db->query($q);
+                            $row = $r->fetch_assoc();
+                            ?>
                             <tr>
+                                
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
                                             <img src="img/cart.jpg" alt="">
                                         </div>
                                         <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
+                                            <p><?php echo $row['product_name'];?></p>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <h5>$360.00</h5>
+                                    <h5 class="p"><?php echo $row['price'];?></h5>
                                 </td>
+                                
                                 <td>
                                     <div class="product_count">
                                         <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                                            class="input-text qty">
+                                            class="q input-text qty">
                                         <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
                                             class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
                                         <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
@@ -92,65 +147,11 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <h5>$720.00</h5>
+                                    <h5 class="t">₹0</h5>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/cart.jpg" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$360.00</h5>
-                                </td>
-                                <td>
-                                    <div class="product_count">
-                                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                                            class="input-text qty">
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                            class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                            class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$720.00</h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/cart.jpg" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$360.00</h5>
-                                </td>
-                                <td>
-                                    <div class="product_count">
-                                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                                            class="input-text qty">
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                            class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                            class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$720.00</h5>
-                                </td>
-                            </tr>
+                            <?php  }?>
+                            
                             <tr class="bottom_button">
                                 <td>
                                     <a class="gray_btn" href="#">Update Cart</a>
@@ -158,16 +159,11 @@
                                 <td>
 
                                 </td>
+                               
                                 <td>
-
+                                   
                                 </td>
-                                <td>
-                                    <div class="cupon_text d-flex align-items-center">
-                                        <input type="text" placeholder="Coupon Code">
-                                        <a class="primary-btn" href="#">Apply</a>
-                                        <a class="gray_btn" href="#">Close Coupon</a>
-                                    </div>
-                                </td>
+                                
                             </tr>
                             <tr>
                                 <td>
@@ -177,46 +173,13 @@
 
                                 </td>
                                 <td>
-                                    <h5>Subtotal</h5>
+                                    <h5>Total</h5>
                                 </td>
                                 <td>
-                                    <h5>$2160.00</h5>
+                                    <h5 id='ot'>₹ 0</h5>
                                 </td>
                             </tr>
-                            <tr class="shipping_area">
-                                <td>
-
-                                </td>
-                                <td>
-
-                                </td>
-                                <td>
-                                    <h5>Shipping</h5>
-                                </td>
-                                <td>
-                                    <div class="shipping_box">
-                                        <ul class="list">
-                                            <li><a href="#">Flat Rate: $5.00</a></li>
-                                            <li><a href="#">Free Shipping</a></li>
-                                            <li><a href="#">Flat Rate: $10.00</a></li>
-                                            <li class="active"><a href="#">Local Delivery: $2.00</a></li>
-                                        </ul>
-                                        <h6>Calculate Shipping <i class="fa fa-caret-down" aria-hidden="true"></i></h6>
-                                        <select class="shipping_select">
-                                            <option value="1">Bangladesh</option>
-                                            <option value="2">India</option>
-                                            <option value="4">Pakistan</option>
-                                        </select>
-                                        <select class="shipping_select">
-                                            <option value="1">Select a State</option>
-                                            <option value="2">Select a State</option>
-                                            <option value="4">Select a State</option>
-                                        </select>
-                                        <input type="text" placeholder="Postcode/Zipcode">
-                                        <a class="gray_btn" href="#">Update Details</a>
-                                    </div>
-                                </td>
-                            </tr>
+                            
                             <tr class="out_button_area">
                                 <td>
 
@@ -229,7 +192,7 @@
                                 </td>
                                 <td>
                                     <div class="checkout_btn_inner d-flex align-items-center">
-                                        <a class="gray_btn" href="#">Continue Shopping</a>
+                                        <a class="gray_btn" href="index.php">Continue Shopping</a>
                                         <a class="primary-btn" href="#">Proceed to checkout</a>
                                     </div>
                                 </td>
@@ -245,6 +208,20 @@
     <!-- start footer Area -->
     <?php include("footer.php");?>
     <!-- End footer Area -->
+
+    <script>
+        var pro = document.querySelectorAll('.q');
+        var pri = document.querySelectorAll('.p');
+        var tot = document.querySelectorAll('.t');
+        var sum = 0;
+        for( i=0;i<pro.length;i++)
+        {
+            console.log(pro[i].value);
+            tot[i].innerHTML = parseInt(pro[i].value) * parseInt(pri[i].innerHTML); 
+            sum = sum + parseInt(tot[i].innerHTML);
+        }
+        document.getElementById('ot').innerHTML = "₹ "+sum;
+    </script>
 
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"

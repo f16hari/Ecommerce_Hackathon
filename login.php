@@ -1,3 +1,29 @@
+<?php include("config.php");?>
+<?php
+	$error = '';
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
+        // username and password sent from form 
+        
+        $myusername = mysqli_real_escape_string($db,$_POST['uname']);
+        $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
+        
+        $sql = "SELECT * FROM user WHERE uname = '$myusername' and password = '$mypassword'";
+        $result = $db->query($sql);
+        $count = $result->num_rows;
+        
+        // If result matched $myusername and $mypassword, table row must be 1 row
+          
+        if($count == 1) {
+  
+           $_SESSION['login_user'] = $myusername;
+              
+           
+    
+        }else {
+           $error = "Your Login Name or Password is invalid";
+        }
+     }
+?>
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -69,12 +95,12 @@
 				<div class="col-lg-6">
 					<div class="login_form_inner">
 						<h3>Log in to enter</h3>
-						<form class="row login_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+						<form class="row login_form" action="" method="post" id="contactForm" novalidate="novalidate">
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+								<input type="text" class="form-control" id="uname" name="uname" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+								<input type="text" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
 							</div>
 							<div class="col-md-12 form-group">
 								<div class="creat_account">
@@ -82,11 +108,13 @@
 									<label for="f-option2">Keep me logged in</label>
 								</div>
 							</div>
+							
 							<div class="col-md-12 form-group">
 								<button type="submit" value="submit" class="primary-btn">Log In</button>
 								<a href="#">Forgot Password?</a>
 							</div>
 						</form>
+						<label style="color:red" for="f-option2"><?php echo $error;?></label>
 					</div>
 				</div>
 			</div>

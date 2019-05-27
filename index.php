@@ -3,9 +3,10 @@
 
 $sql = "select * from product_db";
 $result = $db->query($sql);
-
 $sql1 = "SELECT DISTINCT company FROM product_db";
 $result1 = $db->query($sql1);
+
+
 
 ?>
 <!DOCTYPE html>
@@ -169,11 +170,14 @@ $result1 = $db->query($sql1);
 										<h6 class="l-through"><?php $s = (int)$row['price']+1000; echo $s; ?></h6>
 									</div>
 									<div class="prd-bottom">
-
+										
 										<a href="cart.php?id=<?php echo $row['product_id']?>" class="social-info">
+										<input type="hidden" name="id" id="id" value="<?php echo $row['product_id'];?>" >
 											<span class="ti-bag"></span>
 											<p class="hover-text">add to bag</p>
 										</a>
+										
+										
 										<a href="" class="social-info">
 											<span class="lnr lnr-heart"></span>
 											<p class="hover-text">Wishlist</p>
