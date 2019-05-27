@@ -138,12 +138,10 @@ function updatedb()
                                 
                                 <td>
                                     <div class="product_count">
-                                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                                            class="q input-text qty">
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                            class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                            class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                                        <input type="text" name="qty" id="cqty-<?php echo $row['product_id'];?>" maxlength="12" value="1" title="Quantity:"
+                                            class="q input-text qty" onchange="updateCart()">
+                                        <button onclick="increase(<?php echo $row['product_id'];?>,<?php echo $row['availability'];?>)" class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
+                                        <button onclick="decrease(<?php echo $row['product_id'];?>)" class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
                                     </div>
                                 </td>
                                 <td>
@@ -210,8 +208,27 @@ function updatedb()
     <!-- End footer Area -->
 
     <script>
-        document.querySelectorAll('.q').onchange = updateCart
+       
         updateCart()
+        function increase(pid,max)
+        {
+            var id = "cqty-"+pid
+            var ele = document.getElementById(id)
+            if(parseInt(ele.value)<parseInt(max))
+            ele.value = (parseInt(ele.value)+1);
+            console.log(ele.value)
+            updateCart()
+        }
+        function decrease(pid)
+        {
+            var id = "cqty-"+pid
+            var ele = document.getElementById(id)
+            ele.value = parseInt(ele.value)-1;
+            if(parseInt(ele.value)<0)
+                ele.value = 0;
+            console.log(ele.value)
+            updateCart()
+        }
         function updateCart()
         {
             var pro = document.querySelectorAll('.q');
