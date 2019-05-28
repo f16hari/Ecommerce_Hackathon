@@ -162,7 +162,7 @@ $result1 = $db->query($sql1);
 							<a href="single-product.php?id=<?php echo $row['product_id']?>">
 
 							<div class="single-product" >
-								<img class="img-fluid" src="img/product/p1.jpg" alt="">
+								<img style="height:225px"class="img-fluid" src="product_images/<?php echo $row['product_id']?>.jpg" alt="">
 								<div class="product-details">
 									<h6><?php echo $row['product_name'];?></h6>
 									<div class="price">
