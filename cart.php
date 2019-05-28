@@ -8,6 +8,11 @@ if(isset($_SESSION['login_user']))
     
 }
 
+if($_SERVER["REQUEST_METHOD"] == "POST") 
+{
+    $directions = json_decode($_POST['json']);
+    var_dump($directions);
+}
 if($_SERVER["REQUEST_METHOD"] == "GET") {
 	// username and password sent from form 
 	
@@ -138,6 +143,7 @@ function updatedb()
                                 
                                 <td>
                                     <div class="product_count">
+                                        <input type="hidden" name="id" class="i" value="<?php echo $row['product_id'];?>">
                                         <input type="text" name="qty" id="cqty-<?php echo $row['product_id'];?>" maxlength="12" value="1" title="Quantity:"
                                             class="q input-text qty" onchange="updateCart()">
                                         <button onclick="increase(<?php echo $row['product_id'];?>,<?php echo $row['availability'];?>)" class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
@@ -152,7 +158,7 @@ function updatedb()
                             
                             <tr class="bottom_button">
                                 <td>
-                                    <a class="gray_btn" href="#">Update Cart</a>
+                        <a class="gray_btn" <?php if(isset($_SESSION['login_user'])){ ?>onclick="updateDatabase()"<?php }?> href="#">Update Cart</a>
                                 </td>
                                 <td>
 
@@ -208,6 +214,8 @@ function updatedb()
     <!-- End footer Area -->
 
     <script>
+
+        var jdata={};
        
         updateCart()
         function increase(pid,max)
@@ -239,10 +247,24 @@ function updatedb()
                 sum = sum + parseInt(tot[i].innerHTML);
             }
             document.getElementById('ot').innerHTML = "₹ "+sum;
-            <?php if(isset($_SESSION['login_user'])){?>
-                console.log("update database required");
-            <?php }?>
+            
 
+        }
+        function updateDatabase()
+        {
+            var qty = document.querySelectorAll('.q');
+            var id = document.querySelectorAll('.i');
+            for( i=0;i<id.length;i++)
+            {
+                jdata[id[i].value] = qty[i].value;
+               
+            }
+            $.ajax({
+                type: 'POST',
+                url: 'cart.php',
+                data: {json: JSON.stringify(jdata)},
+                dataType: 'json'
+            });  
         }
         
     </script>
