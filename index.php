@@ -290,7 +290,26 @@ $result1 = $db->query($sql1);
 	</div>
 
 	<script>
-		
+		const productDetails = document.querySelectorAll('.product-details');
+		const searchInput = document.getElementById('searchProduct');
+		// console.log(searchInput);
+		searchInput.addEventListener('submit', function (e) {
+			e.preventDefault();
+			console.log(e.target.elements.search_input.value);
+			productDetails.forEach((product) => {
+				if (product.firstChild.textContent.trim().toLowerCase().includes(e.target.elements.search_input.value.toLowerCase())) {
+					console.log(product.firstChild.getAttribute('href'));
+					window.location.href = product.firstChild.getAttribute('href');
+				}
+				else
+				{
+					alert("Product Not Found");
+				}
+			});
+			// console.log(details);
+
+		});
+		// console.log(productDetails[0].firstChild.textContent.trim());
 		
 		function fillter(category)
 		{
