@@ -114,6 +114,8 @@ $row = $result->fetch_assoc();
         <!-- Modal content -->
         <div class="modal-content">
 		<span class="close">&times;</span>
+		<div class="single-prd-item" id="single_item" style="height:600px;width:600px">
+		</div>
 		</div>
 
     </div>
@@ -364,7 +366,12 @@ $row = $result->fetch_assoc();
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 	<script src="js/gmaps.min.js"></script>
 	<script src="js/main.js"></script>
-
+	
+  <script src="js/three.js"></script>
+  <script src="js/EventDispatcher.js"></script>
+  <script src="js/MTLLoader.js"></script>
+  <script src="js/OBJLoader.js"></script>
+  <script src="js/index.js"></script>
 </body>
 
 </html>

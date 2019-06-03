@@ -13,6 +13,14 @@
 .easyPaginateNav a {padding:5px;}
 .easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}
 
+.floating
+{
+  float:right;
+  z-index: 999;
+  right:0;
+  top:0;
+}
+
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
