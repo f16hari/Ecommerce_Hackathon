@@ -15,7 +15,20 @@
           
         if($count == 1) {
   
-           $_SESSION['login_user'] = $myusername;
+		   $_SESSION['login_user'] = $myusername;
+		   if(isset($_SESSION['login_user']))
+			{
+				if(!isset($_SESSION['cart']))
+				{
+					$_SESSION['cart'] = array();
+				}
+				$name = $_SESSION['login_user'];
+				$q = "SELECT * from user where uname='$name';";
+				$results = $db->query($q);
+				$row = $results->fetch_assoc();
+				$_SESSION['cart'] = unserialize($row['cart_details']);
+				
+			}
            header("Location:index.php");   
            
     

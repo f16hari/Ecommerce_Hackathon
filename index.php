@@ -40,9 +40,6 @@ $result1 = $db->query($sql1);
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/main.css">
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script src="js/jquery.easyPaginate.js"></script>
 </head>
 
 <body id="category">
@@ -290,27 +287,7 @@ $result1 = $db->query($sql1);
 	</div>
 
 	<script>
-		const productDetails = document.querySelectorAll('.product-details');
-		const searchInput = document.getElementById('searchProduct');
-		// console.log(searchInput);
-		searchInput.addEventListener('submit', function (e) {
-			e.preventDefault();
-			console.log(e.target.elements.search_input.value);
-			productDetails.forEach((product) => {
-				if (product.firstChild.textContent.trim().toLowerCase().includes(e.target.elements.search_input.value.toLowerCase())) {
-					console.log(product.firstChild.getAttribute('href'));
-					window.location.href = product.firstChild.getAttribute('href');
-				}
-				else
-				{
-					alert("Product Not Found");
-				}
-			});
-			// console.log(details);
 
-		});
-		// console.log(productDetails[0].firstChild.textContent.trim());
-		
 		function fillter(category)
 		{
 			var allele = document.querySelectorAll('.ss');
@@ -357,36 +334,20 @@ $result1 = $db->query($sql1);
 				
   			}
 		} 
+		
+		document.getElementById('searchProduct').addEventListener('submit', function (e) {
+			const productDetails = document.querySelectorAll('.product-details');
+			e.preventDefault();
+			console.log(e.target.elements.search_input.value);
+			productDetails.forEach((product) => {
+				if (product.firstChild.textContent.trim().toLowerCase().includes(e.target.elements.search_input.value.toLowerCase())) {
+					console.log(product.firstChild.getAttribute('href'));
+					window.location.href = product.firstChild.getAttribute('href');
+				}
+				
+			});
 
-		$(document).on("change", ".psorting", function() {
-
-var sortingMethod = $(this).val();
-
-if(sortingMethod == '2')
-{
-	sortProductsPriceAscending();
-}
-else if(sortingMethod == '3')
-{
-	sortProductsPriceDescending();
-}
-
-});
-function sortProductsPriceAscending()
-{
-var products = $('.ss');
-products.sort(function(a, b){ return $(a).data("price")-$(b).data("price")});
-$(".products-grid").html(products);
-
-}
-
-function sortProductsPriceDescending()
-{
-var products = $('.product');
-products.sort(function(a, b){ return $(b).data("price") - $(a).data("price")});
-$(".products-grid").html(products);
-
-}
+		});
 
 		
 	</script>

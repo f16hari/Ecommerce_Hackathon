@@ -1,18 +1,43 @@
 <?php include("config.php");?>
 <?php
+
 if(isset($_SESSION['login_user']))
 {
+    if(!isset($_SESSION['cart']))
+    {
+        $_SESSION['cart'] = array();
+    }
     $name = $_SESSION['login_user'];
-    $q = "SELECT cart_details from user where uname=$name";
-    $result = $db->query($q);
+    $q = "SELECT * from user where uname='$name';";
+    $results = $db->query($q);
+    $row = $results->fetch_assoc();
+    $_SESSION['cart'] = unserialize($row['cart_details']);
+    foreach($_SESSION['cart'] as $key=>$value){
+        if($value == 0)
+        {
+            unset($_SESSION['cart'][$key]);
+        }
+    }
     
 }
 
-if($_SERVER["REQUEST_METHOD"] == "POST") 
+if(isset($_POST['newdata'])) 
 {
-    $directions = json_decode($_POST['json']);
-    var_dump($directions);
+    if(!isset($_SESSION['cart']))
+    {
+        $_SESSION['cart'] = array();
+    }
+    $newdata = $_POST['newdata'];
+    $d = json_decode($newdata,true);
+    $_SESSION['cartdata'] = $d;
+    foreach($_SESSION['cartdata'] as $k=>$v)
+    {
+        $_SESSION['cart'][$k] = $v;
+    }
+    updatedb();
+
 }
+
 if($_SERVER["REQUEST_METHOD"] == "GET") {
 	// username and password sent from form 
 	
@@ -33,6 +58,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
         $_SESSION['cart'][$id] = 1;
         
     }
+    updatedb();
     
 }
 function updatedb()
@@ -130,7 +156,7 @@ function updatedb()
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
-                                            <img src="img/cart.jpg" alt="">
+                                            <img style="height:170px;width:170px;border:none" src="product_images/<?php echo $row['product_id']?>.jpg" alt="">
                                         </div>
                                         <div class="media-body">
                                             <p><?php echo $row['product_name'];?></p>
@@ -144,7 +170,7 @@ function updatedb()
                                 <td>
                                     <div class="product_count">
                                         <input type="hidden" name="id" class="i" value="<?php echo $row['product_id'];?>">
-                                        <input type="text" name="qty" id="cqty-<?php echo $row['product_id'];?>" maxlength="12" value="1" title="Quantity:"
+                                        <input type="text" name="qty" id="cqty-<?php echo $row['product_id'];?>" maxlength="12" value="<?php echo $value;?>" title="Quantity:"
                                             class="q input-text qty" onchange="updateCart()">
                                         <button onclick="increase(<?php echo $row['product_id'];?>,<?php echo $row['availability'];?>)" class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
                                         <button onclick="decrease(<?php echo $row['product_id'];?>)" class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
@@ -154,11 +180,11 @@ function updatedb()
                                     <h5 class="t">₹0</h5>
                                 </td>
                             </tr>
-                            <?php  }?>
+                            <?php }?>
                             
                             <tr class="bottom_button">
                                 <td>
-                        <a class="gray_btn" <?php if(isset($_SESSION['login_user'])){ ?>onclick="updateDatabase()"<?php }?> href="#">Update Cart</a>
+                        <a class="gray_btn" onclick="updateSession()" href="#">Update Cart</a>
                                 </td>
                                 <td>
 
@@ -265,6 +291,29 @@ function updatedb()
                 data: {json: JSON.stringify(jdata)},
                 dataType: 'json'
             });  
+        }
+
+        function updateSession()
+        {
+            var qty = document.querySelectorAll('.q');
+            var id = document.querySelectorAll('.i');
+            for( i=0;i<id.length;i++)
+            {
+                jdata[id[i].value] = qty[i].value;
+               
+            }
+            newData = JSON.stringify(jdata);
+            console.log(newData)
+            $.ajax({
+                    url: 'cart.php',
+                    type: "post",
+                    data: {'newdata' : newData},
+                    success: function(data){
+                        alert(data);
+                    }
+            });
+
+
         }
         
     </script>
