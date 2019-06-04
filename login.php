@@ -101,7 +101,7 @@
 						<div class="hover">
 							<h4>New to our website?</h4>
 							<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-							<a class="primary-btn" href="registration.html">Create an Account</a>
+							<a class="primary-btn" href="#" id="myBtn">Create an Account</a>
 						</div>
 					</div>
 				</div>
@@ -133,6 +133,30 @@
 			</div>
 		</div>
 	</section>
+	<!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content" style="width:40%">
+		<span class="close">&times;</span>
+		<form action="login.php" method="post">
+			<input type="text" name="name" id="name" placeholder="Name" style="width:100%;padding:6px"><br><br>
+			<select name="country" id="country" >
+				<option selected>select country</option>
+				<option value="India">India</option>
+				<option value="India">China</option>
+				<option value="India">USA</option>
+			</select><br><br>
+			<input type="text" name="state" id="state" placeholder="state" style="width:100%;padding:6px"><br><br>
+			 <textarea name="address" id="address" cols="30" rows="10" placeholder="Address" style="width:100%;padding:6px"></textarea><br><br>
+			 <input type="text" name="pincode" id="pincode" placeholder="Pin code" style="width:100%;padding:6px"><br><br>
+			 <input type="text" name="phno" id="phno" placeholder="phone number" style="width:100%;padding:6px"><br><br>
+			 <input type="text" name="uname" id="uname" placeholder="user name" style="width:100%;padding:6px"><br><br>
+	 		 <input type="password" name="pass" id="pass" placeholder="password" style="width:100%;padding:6px">
+		</form>
+		</div>
+
+    </div>
 	<!--================End Login Box Area =================-->
 
 	<!-- start footer Area -->
@@ -154,6 +178,34 @@
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 	<script src="js/gmaps.min.js"></script>
 	<script src="js/main.js"></script>
+
+	<script>	
+		var modal = document.getElementById("myModal");
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("myBtn");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks on the button, open the modal 
+		btn.onclick = function() {
+		modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+		modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+		}
+	</script>
+
 </body>
 
 </html>
