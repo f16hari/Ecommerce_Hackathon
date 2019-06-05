@@ -86,10 +86,10 @@ $result1 = $db->query($sql1);
 								
 							</ul>
 						</li>
-						<li class="main-nav-list"><a data-toggle="collapse" href="#sports" aria-expanded="false" aria-controls="sports"><span
+						<li class="main-nav-list"><a data-toggle="collapse"  onclick="fillter('.sports')" href="#sports" aria-expanded="false" aria-controls="sports"><span
 								 class="lnr lnr-arrow-right"></span>Sports<span class="number">(77)</span></a>
 							<ul class="collapse" id="sports" data-toggle="collapse" aria-expanded="false" aria-controls="sports">
-								<li class="main-nav-list child"><a href="#">Cricket<span class="number">(13)</span></a></li>
+								<li class="main-nav-list child" onclick="fillter('.cricket')"><a href="#">Cricket<span class="number">(13)</span></a></li>
 								<li class="main-nav-list child"><a href="#">Football<span class="number">(09)</span></a></li>
 								<li class="main-nav-list child"><a href="#">Volleyball<span class="number">(17)</span></a></li>
 							</ul>

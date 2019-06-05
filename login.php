@@ -140,6 +140,7 @@
         <div class="modal-content" style="width:40%">
 		<span class="close">&times;</span>
 		<form action="login.php" method="post">
+			<h2 style="text-align:center">New Registration</h2>
 			<input type="text" name="name" id="name" placeholder="Name" style="width:100%;padding:6px"><br><br>
 			<select name="country" id="country" >
 				<option selected>select country</option>
@@ -152,7 +153,9 @@
 			 <input type="text" name="pincode" id="pincode" placeholder="Pin code" style="width:100%;padding:6px"><br><br>
 			 <input type="text" name="phno" id="phno" placeholder="phone number" style="width:100%;padding:6px"><br><br>
 			 <input type="text" name="uname" id="uname" placeholder="user name" style="width:100%;padding:6px"><br><br>
-	 		 <input type="password" name="pass" id="pass" placeholder="password" style="width:100%;padding:6px">
+			  <input type="password" name="pass" id="pass" placeholder="password" style="width:100%;padding:6px"><br><br>
+			  <button type="submit" value="submit" class="primary-btn" style="">Sign In</button>
+			  <button type="reset" value="submit" class="primary-btn" style="float:right">Cancel</button>
 		</form>
 		</div>
 

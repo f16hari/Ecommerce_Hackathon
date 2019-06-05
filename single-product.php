@@ -368,10 +368,11 @@ $row = $result->fetch_assoc();
 	<script src="js/main.js"></script>
 	
   <script src="js/three.js"></script>
-  <script src="js/EventDispatcher.js"></script>
+  <script src="js/OrbitControls.js"></script>
   <script src="js/MTLLoader.js"></script>
   <script src="js/OBJLoader.js"></script>
   <script src="js/index.js"></script>
+
 </body>
 
 </html>
