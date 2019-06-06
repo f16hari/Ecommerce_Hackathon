@@ -13,6 +13,29 @@
 .easyPaginateNav a {padding:5px;}
 .easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}
 
+.slider {
+  background: #cccccc;
+  width: 360px;
+  height: 20px;
+  border-radius: 5px;
+  float: right;
+}
+
+canvas{
+  position: relative;
+  margin-left:150px; 
+}
+
+.picker {
+  width: 7px;
+  height: 29px;
+  background: goldenrod;
+  top: -4.3px;
+  border-radius: 3px;
+  position: relative;
+  cursor: pointer;
+}
+
 .floating
 {
   float:right;

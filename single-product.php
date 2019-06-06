@@ -24,7 +24,7 @@ $row = $result->fetch_assoc();
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>Karma Shop</title>
+	<title>VMKART</title>
 	<!--
 			CSS
 			============================================= -->
@@ -115,6 +115,9 @@ $row = $result->fetch_assoc();
         <div class="modal-content">
 		<span class="close">&times;</span>
 		<div class="single-prd-item" id="single_item" style="height:600px;width:600px">
+			<div id="slider" class="slider">
+				<div id="picker" class="picker"></div>
+			</div>
 		</div>
 		</div>
 

@@ -29,7 +29,12 @@
 				$_SESSION['cart'] = unserialize($row['cart_details']);
 				
 			}
-           header("Location:index.php");   
+			if($_SESSION['login_user']=='admin')
+			{
+				header("Location:admin.php");   
+			}
+			else
+           		header("Location:index.php");   
            
     
         }else {
@@ -54,7 +59,7 @@
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>Karma Shop</title>
+	<title>VMKART</title>
 
 	<!--
 		CSS
@@ -113,7 +118,7 @@
 								<input type="text" class="form-control" id="uname" name="uname" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+								<input type="password" class="form-control" id="password" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
 							</div>
 							<div class="col-md-12 form-group">
 								<div class="creat_account">

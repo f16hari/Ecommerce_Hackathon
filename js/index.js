@@ -1,6 +1,3 @@
-const documentColorChanger = document.createElement('div');
-const colorSlider = document.createElement('div');
-const colorHandle = document.createElement('div');
 const canvasHolder = document.getElementById("single_item");
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, parseInt(canvasHolder.style.width) / parseInt(canvasHolder.style.height), 0.1, 1000);
@@ -94,8 +91,34 @@ function animate() {
 
 animate();
 
+const slider = document.getElementById('slider');
+const picker = document.getElementById('picker');
+
+// canvasHolder.appendChild(slider)
+
+picker.addEventListener('mousedown', e => {
+  picker.style.position = 'relative';
+  slider.appendChild(picker);
+  
+  moveAt(e.pageX);
+  
+  function moveAt(x) {
+    picker.style.left = (x - picker.offsetWidth / 2) % 360 + 'px';
+    console.log(parseInt(picker.style.left));
+    slider.style.background = `hsl(${parseInt(picker.style.left)}, 100%, 50%)`;
+    mtl.materials.Helmet.color = new THREE.Color(slider.style.background);
+  }
+  
+  slider.addEventListener('mousemove', e => moveAt(e.pageX));
+  
+  picker.addEventListener('mouseup', e => {
+    slider.removeEventListener('mousemove', e => moveAt(e.pageX));
+    picker.removeEventListener('mouseup', () => null);
+  });
+});
+
 // Color picker
-colorSlider.classList.add('slider', 'beach');
+/*colorSlider.classList.add('slider', 'beach');
 colorHandle.classList.add('handle');
 canvasHolder.appendChild(colorSlider);
 colorSlider.appendChild(colorHandle);
@@ -126,9 +149,9 @@ $(".handle").draggable({
   /*start: function( event, ui ) {
     $(this).addClass("pop");
     $(this).parent(".slider").addClass("grad");
-  },*/
+  },
   stop: function (event, ui) {
     $(this).removeClass("pop");
     $(this).parent(".slider").removeClass("grad");
   }
-});
+});*/
